@@ -11,9 +11,18 @@ const { configLog } = require("../config/configLogServer");
 const { configStaticFiles } = require("../config/configStaticFiles");
 
 const app = express();
+configENV(dotenv);
+
+const mongoose = require("mongoose");
+// const url = "mongodb+srv://admin:mma301@milkshop.xignrmc.mongodb.net/";
+const url = process.env.URL_DB;
+const connect = mongoose.connect(url, { family: 4, dbName: 'sample_mflix' });
+
+connect.then((db) => {
+    console.log("ok");
+});
 
 configCORS(app);
-configENV(dotenv);
 configLog(app);
 configBodyParse(app);
 configStaticFiles(app);
