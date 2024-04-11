@@ -27,7 +27,7 @@ const options = {
         },
         servers: [
             {
-                url: "https://kietpt.vn/",
+                url: "https://milk-shop-eight.vercel.app/",
             },
             // {
             //   url: "http://localhost:8080/",
