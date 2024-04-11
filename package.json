@@ -1,0 +1,32 @@
+{
+  "name": "milk_shop",
+  "version": "0.0.0",
+  "description": "This project is for selling milk products",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/server/server.js",
+    "vercel-build": "echo hello"
+  },
+  "keywords": [
+    "MMA301"
+  ],
+  "author": "KietPT",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "5.1.1",
+    "cors": "2.8.5",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "jsonwebtoken": "9.0.2",
+    "mongoose": "8.1.0",
+    "morgan": "1.10.0",
+    "request": "2.88.2",
+    "swagger-jsdoc": "6.0.0",
+    "swagger-ui": "2.2.10",
+    "swagger-ui-express": "4.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
