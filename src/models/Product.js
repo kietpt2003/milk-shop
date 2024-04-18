@@ -23,7 +23,7 @@ const productSchema = new Schema({
         require: true
     },
     sales: {
-        type: String,
+        type: Number,
         require: false
     },
     status: {
@@ -36,6 +36,10 @@ const productSchema = new Schema({
         require: true
     },
     expiredDate: {
+        type: String,
+        require: true
+    },
+    imageURL: {
         type: String,
         require: true
     },

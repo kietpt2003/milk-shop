@@ -1,35 +1,31 @@
-const Product = require('../models/Product');
-const mongoose = require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
+const Account = require('../models/Account');
+const bcrypt = require('bcrypt');
 
-class ProductServices {
-    async getAllProducts() {
-        let arrPros = [];
+class accountService {
+    async getAllAccounts() {
+        let arrAccounts = [];
 
         try {
-            arrPros = await Product.find({})
-            return {
-                status: 200,
-                data: arrPros,
-                message: "Ok",
-            };
+            arrAccounts = await Account.find({})
+            return { arrAccounts };
         } catch (error) {
             console.log(error);
-            return {
-                status: 400,
-                data: arrPros,
-                message: error,
-            };
+            return { arrAccounts };
         }
     }
-    async createProduct(reqBody) {
+    async createAccount(reqBody) {
         try {
             let data = {};
 
-            const product = new Product(reqBody);
+            const hashedPassword = await bcrypt.hash(reqBody.password, 10);
+
+            const account = new Account({
+                ...reqBody,
+                password: hashedPassword,
+            });
 
             try {
-                data = await product.save();
+                data = await account.save();
             } catch (error) {
                 return {
                     status: 400,
@@ -52,4 +48,4 @@ class ProductServices {
     }
 }
 
-module.exports = new ProductServices();
+module.exports = new accountService();

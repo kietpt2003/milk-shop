@@ -14,12 +14,14 @@ const app = express();
 configENV(dotenv);
 
 const mongoose = require("mongoose");
+const { ProductRouter } = require("../routes/ProductAPI");
+const { AccountRouter } = require("../routes/AccountAPI");
 // const url = "mongodb+srv://admin:mma301@milkshop.xignrmc.mongodb.net/";
 const url = process.env.URL_DB;
-const connect = mongoose.connect(url, { family: 4, dbName: 'sample_mflix' });
+const connect = mongoose.connect(url, { family: 4, dbName: 'milkShop' });
 
 connect.then((db) => {
-    console.log("ok");
+    console.log("Connect server success");
 });
 
 configCORS(app);
@@ -59,6 +61,9 @@ app.use(
 app.get("/", (req, res) => {
     res.end(`Hello kiet`);
 });
+
+AccountRouter(app);
+ProductRouter(app);
 
 const port = process.env.PORT || 8888;
 
