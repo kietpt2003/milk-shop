@@ -1,42 +1,43 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const productSchema = new Schema({
-    name: {
+const accountSchema = new Schema({
+    email: {
         type: String,
         require: true
     },
-    brandName: {
+    password: {
         type: String,
         require: true
     },
-    category: {
-        type: Schema.Types.ObjectId,
+    fullName: {
+        type: String,
         require: true
     },
-    price: {
-        type: Number,
+    address: {
+        type: String,
         require: true
     },
-    quantity: {
-        type: Number,
+    phone: {
+        type: String,
         require: true
     },
-    sales: {
+    dateOfBirth: {
         type: String,
         require: false
+    },
+    gender: {
+        type: Boolean,
+        default: true,
+        require: false
+    },
+    role: {
+        type: String,
+        require: true
     },
     status: {
         type: Boolean,
         default: true,
-        require: true
-    },
-    importedDate: {
-        type: String,
-        require: true
-    },
-    expiredDate: {
-        type: String,
         require: true
     },
 }, {
@@ -45,5 +46,5 @@ const productSchema = new Schema({
 });
 
 
-const Product = mongoose.model('product', productSchema);
-module.exports = Product;
+const Account = mongoose.model('account', accountSchema);
+module.exports = Account;
