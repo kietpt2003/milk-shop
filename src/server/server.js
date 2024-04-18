@@ -16,8 +16,8 @@ configENV(dotenv);
 const mongoose = require("mongoose");
 const { ProductRouter } = require("../routes/ProductAPI");
 const { AccountRouter } = require("../routes/AccountAPI");
-// const url = "mongodb+srv://admin:mma301@milkshop.xignrmc.mongodb.net/";
-const url = process.env.URL_DB;
+const url = "mongodb+srv://admin:mma301@milkshop.xignrmc.mongodb.net/";
+// const url = process.env.URL_DB;
 const connect = mongoose.connect(url, { family: 4, dbName: 'milkShop' });
 
 connect.then((db) => {
