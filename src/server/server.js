@@ -20,6 +20,7 @@ const { CategoryRouter } = require("../routes/CategoryAPI");
 const { VoucherRouter } = require("../routes/VoucherAPI");
 const { ShippingStatusRouter } = require("../routes/ShippingStatusAPI");
 const { OrderRouter } = require("../routes/OrderAPI");
+const { AuthenRouter } = require("../routes/AuthenAPI");
 const url = "mongodb+srv://admin:mma301@milkshop.xignrmc.mongodb.net/";
 // const url = process.env.URL_DB;
 const connect = mongoose.connect(url, { family: 4, dbName: 'milkShop' });
@@ -72,6 +73,7 @@ CategoryRouter(app);
 VoucherRouter(app);
 ShippingStatusRouter(app);
 OrderRouter(app);
+AuthenRouter(app);
 
 const port = process.env.PORT || 8888;
 

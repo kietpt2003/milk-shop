@@ -45,6 +45,66 @@ class accountService {
             message: data.length !== 0 ? "OK" : "No data",
         };
     }
+    //Login
+    async loginAccount(reqBody) {
+        const { email, password } = reqBody;
+
+        if (!email || !password) {
+            return {
+                status: 400,
+                messageError: "Email and password required."
+            };
+        }
+        const account = await services.getAccountByEmail(email);
+        if (account.status !== 200) {
+            return {
+                status: account.status,
+                messageError: account.messageError
+            };
+        }
+        const validPassword = await bcrypt.compare(
+            password, account.data.password
+        );
+        if (!validPassword) {
+            return {
+                status: 401,
+                messageError: "Wrong password",
+            };
+        }
+        if (!account.data.status) {
+            return {
+                status: 401,
+                messageError: "Your account has been inactive",
+            };
+        }
+        if (account && validPassword) {
+            return {
+                status: 200,
+                data: account.data,
+                message: "OK",
+            };
+        }
+    }
+};
+
+const services = {
+    getAccountByEmail: async (email) => {
+        try {
+            const data = await Account.find({ email: email });
+
+            return {
+                status: 200,
+                data: data[0],
+                message: data.length !== 0 ? "OK" : "No data",
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                status: 500,
+                messageError: error,
+            };
+        }
+    },
 }
 
 module.exports = new accountService();
