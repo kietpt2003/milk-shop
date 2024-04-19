@@ -44,7 +44,7 @@ const productSchema = new Schema({
         require: true
     },
 }, {
-    collection: 'account',
+    collection: 'product',
     versionKey: false
 });
 
