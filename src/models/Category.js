@@ -7,7 +7,10 @@ const categorySchema = new Schema({
         require: true
     },
     products: {
-        type: Array,
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'product', // Reference to the Product schema
+        }],
         require: false
     },
 }, {

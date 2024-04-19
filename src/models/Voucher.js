@@ -16,7 +16,10 @@ const voucherSchema = new Schema({
         require: true
     },
     categories_applied: {
-        type: Array,
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'category', // Reference to the Category schema
+        }],
         require: true
     },
     end_at: {

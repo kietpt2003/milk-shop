@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
     shippingList: {
-        type: Array,
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'shipping_status', // Reference to the ShippingStatus schema
+        }],
         require: false
     },
     productList: {
