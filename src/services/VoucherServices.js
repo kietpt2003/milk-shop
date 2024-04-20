@@ -14,7 +14,7 @@ class voucherService {
             const count = await Voucher.countDocuments();
             const totalPages = Math.ceil(count / limit);
 
-            data = await Voucher.find({}, null, options);
+            data = await Voucher.find({}, null, options).populate("categories_applied");
 
             return {
                 status: 200,
