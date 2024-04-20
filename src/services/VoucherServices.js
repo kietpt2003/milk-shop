@@ -1,21 +1,33 @@
 const Voucher = require('../models/Voucher');
 
 class voucherService {
-    async getAllVouchers() {
+    async getAllVouchers(sortBy, page, limit) {
         let data = [];
 
         try {
-            data = await Voucher.find({})
+            const options = {
+                sort: sortBy,
+                skip: (page - 1) * limit,
+                limit: parseInt(limit)
+            };
+
+            const count = await Voucher.countDocuments();
+            const totalPages = Math.ceil(count / limit);
+
+            data = await Voucher.find({}, null, options);
+
             return {
                 status: 200,
                 data: data,
-                message: data.length !== 0 ? "OK" : "No data",
+                totalPages: totalPages,
+                currentPage: parseInt(page),
+                message: data.length !== 0 ? "OK" : "No data"
             };
         } catch (error) {
             console.log(error);
             return {
                 status: 400,
-                messageError: error.message,
+                messageError: error.message
             };
         }
     }

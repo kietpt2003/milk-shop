@@ -45,9 +45,9 @@ const options = {
             {
                 url: "https://milk-shop-eight.vercel.app/",
             },
-            // {
-            //   url: "http://localhost:8080/",
-            // },
+            {
+              url: "http://localhost:8080/",
+            },
         ],
     },
     apis: ["./src/routes/*.js"],
