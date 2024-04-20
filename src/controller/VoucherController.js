@@ -4,7 +4,8 @@ class VoucherController {
     async getVoucher(req, res) {
         let data = await voucherServices.getAllVouchers(
             req.query.sort_by,
-            req.query.page
+            req.query.page,
+            req.query.limit
         );
         return res.status(data.status).json(data);
     }
