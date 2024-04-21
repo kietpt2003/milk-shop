@@ -11,4 +11,12 @@ const OrderRouter = (app) => {
     return app.use('/api/order', router);
 }
 
-module.exports = { OrderRouter }
+const ChartRouter = (app) => {
+    const router = express.Router();
+
+    router.get('/', orderController.getChart);
+
+    return app.use('/api/chart', router);
+}
+
+module.exports = { OrderRouter, ChartRouter }

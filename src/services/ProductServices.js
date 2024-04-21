@@ -30,7 +30,6 @@ class ProductServices {
                 path: "category"
 
             }).lean();
-            console.log(arrPros);
             const arrCountProductInOrder = await OrderServices.getCountedProduct();
             const productsWithCount = arrPros.map(product => {
                 for (let i = 0; i < arrCountProductInOrder.length; i++) {

@@ -6,6 +6,10 @@ const productSchema = new Schema({
         type: String,
         require: true
     },
+    description: {
+        type: String,
+        require: true
+    },
     brandName: {
         type: String,
         require: true
@@ -18,6 +22,10 @@ const productSchema = new Schema({
     price: {
         type: Number,
         require: true
+    },
+    percentageRating: {
+        type: Number,
+        require: false
     },
     quantity: {
         type: Number,

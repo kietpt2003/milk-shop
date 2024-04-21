@@ -19,8 +19,9 @@ const { AccountRouter } = require("../routes/AccountAPI");
 const { CategoryRouter } = require("../routes/CategoryAPI");
 const { VoucherRouter } = require("../routes/VoucherAPI");
 const { ShippingStatusRouter } = require("../routes/ShippingStatusAPI");
-const { OrderRouter } = require("../routes/OrderAPI");
+const { OrderRouter, ChartRouter } = require("../routes/OrderAPI");
 const { AuthenRouter } = require("../routes/AuthenAPI");
+const { CommentRouter } = require("../routes/CommentAPI");
 const url = "mongodb+srv://admin:mma301@milkshop.xignrmc.mongodb.net/";
 // const url = process.env.URL_DB;
 const connect = mongoose.connect(url, { family: 4, dbName: 'milkShop' });
@@ -46,7 +47,7 @@ const options = {
                 url: "https://milk-shop-eight.vercel.app/",
             },
             {
-              url: "http://localhost:8080/",
+                url: "http://localhost:8080/",
             },
         ],
     },
@@ -74,6 +75,8 @@ VoucherRouter(app);
 ShippingStatusRouter(app);
 OrderRouter(app);
 AuthenRouter(app);
+CommentRouter(app);
+ChartRouter(app);
 
 const port = process.env.PORT || 8888;
 
