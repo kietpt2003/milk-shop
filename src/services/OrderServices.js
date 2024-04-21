@@ -151,7 +151,7 @@ function productsTrueQuantity(products) {
         const salePrice = product.sales == 0 ? 0 : product.sales == 100 ? (product.count * product.price) : Math.round(product.count * ((100 - product.sales) / 100) * product.price);
         return {
             brandName: product.brandName,
-            category: product.category,
+            category: product.category.name,
             productName: product.name,
             trueQuantity: product.count,
             sellPrice: sellPrice,
