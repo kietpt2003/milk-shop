@@ -26,7 +26,11 @@ class ProductServices {
         let arrPros = [];
 
         try {
-            arrPros = await Product.find({}).lean();
+            arrPros = await Product.find({}).populate({
+                path: "category"
+
+            }).lean();
+            console.log(arrPros);
             const arrCountProductInOrder = await OrderServices.getCountedProduct();
             const productsWithCount = arrPros.map(product => {
                 for (let i = 0; i < arrCountProductInOrder.length; i++) {
@@ -42,7 +46,7 @@ class ProductServices {
                     count: 0
                 };
             });
-            console.log(productsWithCount);
+            // console.log(productsWithCount);
             return {
                 status: 200,
                 data: productsWithCount,
