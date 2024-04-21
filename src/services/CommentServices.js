@@ -6,7 +6,7 @@ class commentServices {
         let data = [];
 
         try {
-            data = await Comment.find({})
+            data = await Comment.find({}).populate("author")
             return {
                 status: 200,
                 data: data,
