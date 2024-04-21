@@ -117,35 +117,48 @@ async function calChart(topPro) {
 }
 
 function productsTrueQuantity(products) {
-    const brandTrueQuantity = {};
-    const sellPrice = {};
-    const salePrice = {};
+    // const brandTrueQuantity = {};
+    // const sellPrice = {};
+    // const salePrice = {};
 
-    // Iterate over the products array
-    products.forEach(product => {
-        const brandName = product.brandName;
+    // // Iterate over the products array
+    // products.forEach(product => {
+    //     const brandName = product.brandName;
 
-        // If the brandName doesn't exist in the brandTrueQuantity object, initialize it to 1
-        if (!brandTrueQuantity[brandName]) {
-            brandTrueQuantity[brandName] = product.count;
-            sellPrice[brandName] = (product.count * product.price);
-            salePrice[brandName] = product.sales == 0 ? 0 : product.sales == 100 ? (product.count * product.price) : Math.round(product.count * ((100 - product.sales) / 100) * product.price);
-        } else {
-            // If the brandName already exists in the brandTrueQuantity object, increment the count
-            brandTrueQuantity[brandName] += product.count;
-            sellPrice[brandName] += (product.count * product.price);
-            salePrice[brandName] += (product.sales == 0 ? 0 : product.sales == 100 ? (product.count * product.price) : Math.round(product.count * ((100 - product.sales) / 100) * product.price));
+    //     // If the brandName doesn't exist in the brandTrueQuantity object, initialize it to 1
+    //     if (!brandTrueQuantity[brandName]) {
+    //         brandTrueQuantity[brandName] = product.count;
+    //         sellPrice[brandName] = (product.count * product.price);
+    //         salePrice[brandName] = product.sales == 0 ? 0 : product.sales == 100 ? (product.count * product.price) : Math.round(product.count * ((100 - product.sales) / 100) * product.price);
+    //     } else {
+    //         // If the brandName already exists in the brandTrueQuantity object, increment the count
+    //         brandTrueQuantity[brandName] += product.count;
+    //         sellPrice[brandName] += (product.count * product.price);
+    //         salePrice[brandName] += (product.sales == 0 ? 0 : product.sales == 100 ? (product.count * product.price) : Math.round(product.count * ((100 - product.sales) / 100) * product.price));
+    //     }
+    // });
+
+    // // Convert the brandTrueQuantity object to an array of objects with brandName and count
+    // const result = Object.keys(brandTrueQuantity).map(brandName => ({
+    //     brandName: brandName,
+    //     trueQuantity: brandTrueQuantity[brandName],
+    //     sellPrice: sellPrice[brandName],
+    //     salePrice: salePrice[brandName],
+    //     totalPrice: sellPrice[brandName] - salePrice[brandName],
+    // }));
+    const result = products.map(product => {
+        const sellPrice = (product.count * product.price);
+        const salePrice = product.sales == 0 ? 0 : product.sales == 100 ? (product.count * product.price) : Math.round(product.count * ((100 - product.sales) / 100) * product.price);
+        return {
+            brandName: product.brandName,
+            category: product.category,
+            productName: product.name,
+            trueQuantity: product.count,
+            sellPrice: sellPrice,
+            salePrice: salePrice,
+            totalPrice: sellPrice - salePrice,
         }
     });
-
-    // Convert the brandTrueQuantity object to an array of objects with brandName and count
-    const result = Object.keys(brandTrueQuantity).map(brandName => ({
-        brandName: brandName,
-        trueQuantity: brandTrueQuantity[brandName],
-        sellPrice: sellPrice[brandName],
-        salePrice: salePrice[brandName],
-        totalPrice: sellPrice[brandName] - salePrice[brandName],
-    }));
 
     return result;
 }
