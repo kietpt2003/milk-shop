@@ -152,6 +152,7 @@ function productsTrueQuantity(products) {
         return {
             brandName: product.brandName,
             category: product.category.name,
+            productId: product._id,
             productName: product.name,
             trueQuantity: product.count,
             sellPrice: sellPrice,
