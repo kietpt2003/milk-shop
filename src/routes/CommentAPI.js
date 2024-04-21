@@ -5,6 +5,7 @@ const CommentRouter = (app) => {
     const router = express.Router();
 
     router.get('/', commentController.getComment);
+    router.get('/averageRating', commentController.getAverageRating);
 
     router.post('/', commentController.createComment);
 

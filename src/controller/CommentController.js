@@ -12,6 +12,10 @@ class CommentController {
         let data = await commentServices.createComment(req.body);
         return res.status(data.status).json(data);
     }
+    async getAverageRating(req, res){
+        let data = await commentServices.getAverageRatingByProductId(req.query.productId);
+        return res.status(data.status).json(data);
+    }
 }
 
 module.exports = new CommentController();

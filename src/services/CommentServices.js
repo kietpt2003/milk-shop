@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Comment = require('../models/Comment');
 
 class commentServices {
@@ -38,6 +39,40 @@ class commentServices {
             data: data,
             message: data.length !== 0 ? "OK" : "No data",
         };
+    }
+    async getAverageRatingByProductId(productId) {
+        try {
+            const result = await Comment.aggregate([
+                {
+                    $match: { productId: new mongoose.Types.ObjectId(productId) }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        averageRating: { $avg: "$rating" }
+                    }
+                }
+            ]);
+            if (result.length > 0) {
+                const averageRating = parseFloat(result[0].averageRating.toFixed(1));
+                return {
+                    status: 200,
+                    averageRating: averageRating,
+                    message: "OK"
+                };
+            } else {
+                return {
+                    status: 404,
+                    message: "No comments found for the product"
+                };
+            }
+        } catch (error) {
+            console.error(error);
+            return {
+                status: 500,
+                messageError: "Internal server error"
+            };
+        }
     }
 }
 
