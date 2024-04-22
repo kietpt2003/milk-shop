@@ -1,8 +1,5 @@
 const Product = require("../models/Product");
 const OrderServices = require("./OrderServices");
-const Category = require('../models/Category');
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 
 class ProductServices {
   async getAllProducts() {
@@ -62,7 +59,7 @@ class ProductServices {
     }
   }
   async createProduct(reqBody) {
-    const { name, categoryId } = reqBody;
+    const { name } = reqBody;
   
     try {
       // Check for duplicate product name
@@ -76,34 +73,17 @@ class ProductServices {
   
       const product = new Product(reqBody);
       const savedProduct = await product.save();
-      const validCategoryId = ObjectId(categoryId);
-  
-      // Add the productId to the associated category's products array
-      const category = await Category.findByIdAndUpdate(
-        validCategoryId,
-        {
-          $push: { products: savedProduct._id },
-        },
-        { new: true }
-      );
-  
-      if (!category) {
-        return {
-          status: 404,
-          message: "Không tìm thấy category",
-        };
-      }
   
       return {
         status: 201,
         data: savedProduct,
-        message: "Tạo sản phẩm thành công",
+        message: "Tạo mới sản phẩm thành công",
       };
     } catch (error) {
       console.log(error);
       return {
-        status: 400,
-        message: "Tạo sản phẩm thất bại",
+        status: 500,
+        message: "Internal server error",
       };
     }
   }
