@@ -16,6 +16,10 @@ class AccountController {
         let data = await accountServices.loginAccount(req.body);
         return res.status(data.status).json(data);
     }
+    async updateStatusController(req, res) {
+        let data = await accountServices.updateAccountStatus(req.params.id, req.body.status);
+        return res.status(data.status).json(data);
+    }
 }
 
 module.exports = new AccountController();
