@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
-const mongoose = require("mongoose");
 const OrderServices = require("./OrderServices");
+const Category = require('../models/Category');
+const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 class ProductServices {
@@ -61,8 +62,8 @@ class ProductServices {
     }
   }
   async createProduct(reqBody) {
-    const { name } = reqBody;
-
+    const { name, categoryId } = reqBody;
+  
     try {
       // Check for duplicate product name
       const duplicateProduct = await this.getProductByName(name);
@@ -72,20 +73,37 @@ class ProductServices {
           message: "Tên sản phẩm đã tồn tại",
         };
       }
-
+  
       const product = new Product(reqBody);
       const savedProduct = await product.save();
-
+      const validCategoryId = ObjectId(categoryId);
+  
+      // Add the productId to the associated category's products array
+      const category = await Category.findByIdAndUpdate(
+        validCategoryId,
+        {
+          $push: { products: savedProduct._id },
+        },
+        { new: true }
+      );
+  
+      if (!category) {
+        return {
+          status: 404,
+          message: "Không tìm thấy category",
+        };
+      }
+  
       return {
         status: 201,
         data: savedProduct,
-        message: "OK",
+        message: "Tạo sản phẩm thành công",
       };
     } catch (error) {
       console.log(error);
       return {
-        status: 500,
-        message: "Internal server error",
+        status: 400,
+        message: "Tạo sản phẩm thất bại",
       };
     }
   }
@@ -129,8 +147,8 @@ class ProductServices {
         };
       }
 
-      // Exclude `percentageRating` from the updatedFields object
-      const { percentageRating, ...fieldsToUpdate } = updatedFields;
+      // Exclude `brandName, catgeory, percentageRating, importedDate` from the updatedFields object
+      const { brandName, category, percentageRating, importedDate, ...fieldsToUpdate } = updatedFields;
 
       const updatedProduct = await Product.findByIdAndUpdate(
         productId,
