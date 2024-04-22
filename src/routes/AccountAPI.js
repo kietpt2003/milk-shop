@@ -7,7 +7,7 @@ const AccountRouter = (app) => {
     router.get('/', accountController.getAccount);
 
     router.post('/', accountController.createAccount);
-    router.put('/status/:id', accountController.updateStatusController);
+    router.put('/:id', accountController.updateController);
 
     return app.use('/api/account', router);
 }

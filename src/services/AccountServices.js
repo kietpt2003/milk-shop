@@ -83,12 +83,12 @@ class accountService {
       };
     }
   }
-  async updateAccountStatus(accountId, newStatus) {
+  async updateAccount(accountId, reqBody) {
     let data = {}
     try {
       data = await Account.findByIdAndUpdate(
         accountId,
-        { status: newStatus },
+        { $set: reqBody },
         { new: true }
       );
     } catch (error) {
