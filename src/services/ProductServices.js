@@ -8,7 +8,7 @@ class ProductServices {
     let arrPros = [];
 
     try {
-      arrPros = await Product.find({});
+      arrPros = await Product.find({}).populate('category');
       return {
         status: 200,
         data: arrPros,
@@ -69,7 +69,7 @@ class ProductServices {
       if (duplicateProduct.status === 200) {
         return {
           status: 400,
-          message: "Product name already exists",
+          message: "Tên sản phẩm đã tồn tại",
         };
       }
 
@@ -105,7 +105,7 @@ class ProductServices {
       } else {
         return {
           status: 404,
-          message: "Product not found",
+          message: "Không tìm thấy sản phẩm",
         };
       }
     } catch (error) {
@@ -125,7 +125,7 @@ class ProductServices {
       if (duplicateProduct.status === 200 && duplicateProduct.data._id.toString() !== productId) {
         return {
           status: 400,
-          message: "Product name already exists",
+          message: "Tên sản phẩm đã tồn tại",
         };
       }
 
@@ -142,12 +142,12 @@ class ProductServices {
         return {
           status: 200,
           data: updatedProduct,
-          message: "Product updated successfully",
+          message: "Cập nhật sản phẩm thành công",
         };
       } else {
         return {
           status: 404,
-          message: "Product not found",
+          message: "Không tìm thấy sản phẩm",
         };
       }
     } catch (error) {
