@@ -8,6 +8,10 @@ class ProductController {
         let data = await productServices.getTopProducts();
         return res.status(data.status).json(data);
     }
+    async getProductByName(req, res) {
+        let data = await productServices.getProductByName(req.query.name);
+        return res.status(data.status).json(data);
+    }
     async createProduct(req, res) {
         let data = await productServices.createProduct(req.body);
         return res.status(data.status).json(data);
