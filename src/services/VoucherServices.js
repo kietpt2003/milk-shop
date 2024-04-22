@@ -51,6 +51,28 @@ class voucherService {
             message: data.length !== 0 ? "OK" : "No data",
         };
     }
+    async updateVoucher(voucherId, reqBody) {
+        let data = {}
+        try {
+          data = await Voucher.findByIdAndUpdate(
+            voucherId,
+            { $set: reqBody },
+            { new: true }
+          );
+        } catch (error) {
+          console.error(error);
+          return {
+            status: 400,
+            messageError: "Voucher không tồn tại",
+          };
+        }
+    
+        return {
+          status: 200,
+          data: data,
+          message: "Voucher cập nhật thành công",
+        };
+      }
 }
 
 module.exports = new voucherService();
