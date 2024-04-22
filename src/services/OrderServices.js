@@ -20,6 +20,25 @@ class orderServices {
         }
     }
 
+    async getOrderById(id) {
+        let data = {};
+
+        try {
+            data = await Order.findById(id)
+            return {
+                status: 200,
+                data: data,
+                message: data ? "OK" : "No data",
+            };
+        } catch (error) {
+            console.log(error);
+            return {
+                status: 400,
+                messageError: error.message,
+            };
+        }
+    }
+
     async createOrder(reqBody) {
         let data = {};
 
