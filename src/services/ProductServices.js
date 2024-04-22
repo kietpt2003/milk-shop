@@ -61,24 +61,33 @@ class ProductServices {
     }
   }
   async createProduct(reqBody) {
-    let data = {};
-
-    const product = new Product(reqBody);
+    const { name } = reqBody;
 
     try {
-      data = await product.save();
-    } catch (error) {
+      // Check for duplicate product name
+      const duplicateProduct = await this.getProductByName(name);
+      if (duplicateProduct.status === 200) {
+        return {
+          status: 400,
+          message: "Product name already exists",
+        };
+      }
+
+      const product = new Product(reqBody);
+      const savedProduct = await product.save();
+
       return {
-        status: 400,
-        messageError: error.message,
+        status: 201,
+        data: savedProduct,
+        message: "OK",
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        status: 500,
+        message: "Internal server error",
       };
     }
-
-    return {
-      status: 201,
-      data: data,
-      message: data.length !== 0 ? "OK" : "No data",
-    };
   }
   async getProductByName(productName) {
     try {
