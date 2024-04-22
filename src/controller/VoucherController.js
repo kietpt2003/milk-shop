@@ -13,6 +13,10 @@ class VoucherController {
         let data = await voucherServices.createVoucher(req.body);
         return res.status(data.status).json(data);
     }
+    async updateVoucher(req, res) {
+        let data = await voucherServices.updateVoucher(req.params.id, req.body);
+        return res.status(data.status).json(data);
+    }
 }
 
 module.exports = new VoucherController();
