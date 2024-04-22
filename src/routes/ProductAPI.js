@@ -73,6 +73,8 @@ const ProductRouter = (app) => {
 
     router.post('/', productController.createProduct);
 
+    router.put('/:id', productController.updateProduct);
+
     return app.use('/api/product', router);
 }
 

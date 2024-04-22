@@ -116,6 +116,48 @@ class ProductServices {
       };
     }
   }
+  async updateProduct(productId, updatedFields) {
+    try {
+      const { name } = updatedFields;
+
+      // Check for duplicate product name
+      const duplicateProduct = await this.getProductByName(name);
+      if (duplicateProduct.status === 200 && duplicateProduct.data._id.toString() !== productId) {
+        return {
+          status: 400,
+          message: "Product name already exists",
+        };
+      }
+
+      // Exclude `percentageRating` from the updatedFields object
+      const { percentageRating, ...fieldsToUpdate } = updatedFields;
+
+      const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        { $set: fieldsToUpdate },
+        { new: true }
+      );
+
+      if (updatedProduct) {
+        return {
+          status: 200,
+          data: updatedProduct,
+          message: "Product updated successfully",
+        };
+      } else {
+        return {
+          status: 404,
+          message: "Product not found",
+        };
+      }
+    } catch (error) {
+      console.log(error);
+      return {
+        status: 500,
+        message: "Internal server error",
+      };
+    }
+  }
 }
 
 module.exports = new ProductServices();
