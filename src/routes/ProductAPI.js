@@ -69,7 +69,11 @@ const ProductRouter = (app) => {
  */
     router.get('/top', productController.topProducts);
 
+    router.get('/product-name', productController.getProductByName)
+
     router.post('/', productController.createProduct);
+
+    router.put('/:id', productController.updateProduct);
 
     return app.use('/api/product', router);
 }

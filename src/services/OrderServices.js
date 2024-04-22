@@ -5,7 +5,7 @@ class orderServices {
         let data = [];
 
         try {
-            data = await Order.find({})
+            data = await Order.find({}).populate("shippingList")
             return {
                 status: 200,
                 data: data,
@@ -24,7 +24,7 @@ class orderServices {
         let data = {};
 
         try {
-            data = await Order.findById(id)
+            data = await Order.findById(id).populate('shippingList')
             return {
                 status: 200,
                 data: data,
