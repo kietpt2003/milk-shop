@@ -62,6 +62,7 @@ const VoucherRouter = (app) => {
  */
 
     router.get('/', voucherController.getVoucher);
+    router.get('/applicable-vouchers-of-products', voucherController.getApplicableVouchers);
 
     router.post('/', voucherController.createVoucher);
     router.put('/:id', voucherController.updateVoucher);
