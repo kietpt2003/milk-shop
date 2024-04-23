@@ -52,7 +52,7 @@ class accountService {
     if (!email || !password) {
       return {
         status: 400,
-        messageError: "Email and password required.",
+        messageError: "Xin hãy nhập email và mật khẩu",
       };
     }
     const account = await services.getAccountByEmail(email);
@@ -66,13 +66,13 @@ class accountService {
     if (!validPassword) {
       return {
         status: 401,
-        messageError: "Wrong password",
+        messageError: "Mật khẩu không chính xác",
       };
     }
     if (!account.data.status) {
       return {
         status: 401,
-        messageError: "Your account has been inactive",
+        messageError: "Tài khoản của bạn đã bị khoá",
       };
     }
     if (account && validPassword) {
