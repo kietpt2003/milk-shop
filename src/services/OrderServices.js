@@ -58,7 +58,14 @@ class orderServices {
                     statusString: "Đang xử lý"
                 }
                 const shippingStatus = new ShippingStatus(objShippingStatus);
-                data = await shippingStatus.save();
+                const dataShip = await shippingStatus.save();
+
+                const shippingList = await ShippingStatus.find({ orderId: objShippingStatus.orderId });
+                data = await Order.findByIdAndUpdate(
+                    objShippingStatus.orderId,
+                    { shippingList: shippingList },
+                    { new: true }
+                );
             }
 
         } catch (error) {
