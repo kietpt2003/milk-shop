@@ -1,5 +1,5 @@
 const Order = require('../models/Order');
-
+const ShippingStatus = require('../models/ShippingStatus');
 class orderServices {
     async getAllOrders() {
         let data = [];
@@ -41,11 +41,26 @@ class orderServices {
 
     async createOrder(reqBody) {
         let data = {};
+        const { order, user } = reqBody;
 
-        const voucher = new Order(reqBody);
+        const voucher = new Order(order);
 
         try {
             data = await voucher.save();
+            if (data) {
+                const objShippingStatus = {
+                    orderId: data._id,
+                    date: data.timeOrder,
+                    receiver: user.fullName,
+                    sender: "Chưa có tài xế",
+                    senderPhone: "Chưa có dữ liệu",
+                    licensePlate: "Chưa có dữ liệu",
+                    statusString: "Đang xử lí"
+                }
+                const shippingStatus = new ShippingStatus(objShippingStatus);
+                data = await shippingStatus.save();
+            }
+
         } catch (error) {
             return {
                 status: 400,
