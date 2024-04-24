@@ -55,7 +55,7 @@ class orderServices {
                     sender: "Chưa có tài xế",
                     senderPhone: "Chưa có dữ liệu",
                     licensePlate: "Chưa có dữ liệu",
-                    statusString: "Đang xử lí"
+                    statusString: "Đang xử lý"
                 }
                 const shippingStatus = new ShippingStatus(objShippingStatus);
                 data = await shippingStatus.save();
